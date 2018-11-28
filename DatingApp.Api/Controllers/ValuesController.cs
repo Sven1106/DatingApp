@@ -26,7 +26,7 @@ namespace DatingApp.API.Controllers
 
         // GET api/values
         [HttpGet]
-        public async Task<IActionResult> GetValues() //IActionResult can return HTTPResponses to the client. 
+        public async Task<IActionResult> GetValues() //IActionResult can return HttpResponses to the client. 
         {
             List<Value> values = await _db.Values.ToListAsync();
             return Ok(values);
