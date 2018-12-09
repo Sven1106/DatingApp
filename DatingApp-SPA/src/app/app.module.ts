@@ -1,3 +1,4 @@
+import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; // @angular/http is deprecated
@@ -20,7 +21,9 @@ import { RegisterComponent } from './register/register.component';
       FormsModule,
       HttpClientModule
    ],
-   providers: [],
+   providers: [
+      ErrorInterceptorProvider
+   ],
    bootstrap: [
       AppComponent
    ]
