@@ -44,11 +44,10 @@ namespace DatingApp.Api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
+        public async Task<IActionResult> Login(UserForLoginDTO userForLoginDTO)
         {
-            // throw new Exception("Doesn't work");
-            userForLoginDto.Username = userForLoginDto.Username.ToLower();
-            var userFromRepo = await _iAuthRepo.Login(userForLoginDto.Username, userForLoginDto.Password);
+            userForLoginDTO.Username = userForLoginDTO.Username.ToLower();
+            var userFromRepo = await _iAuthRepo.Login(userForLoginDTO.Username, userForLoginDTO.Password);
             if (userFromRepo == null)
             {
                 return Unauthorized();
