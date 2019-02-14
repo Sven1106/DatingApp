@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -10,8 +9,7 @@ export class HomeComponent implements OnInit {
   registerMode: Boolean = false;
   values: any;
 
-  constructor(private http: HttpClient) {
-  } // the constructor executes too early for the application to get data from an api
+  constructor() {}
 
   ngOnInit() { // happens after the component is initialized.
   }

@@ -1,0 +1,27 @@
+.card-img-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+.card {
+    transition: ease-in 200ms;
+    transition-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
+}.card:hover {
+    transform: scale(1.1);
+}
+.member-icons {
+    position: absolute;
+    bottom:-30%;
+    left:0;
+    right:0;
+
+    margin: auto;
+    opacity: 0;
+}
+
+.card-img-wrapper:hover .member-icons {
+    opacity: 1;
+    bottom:0;
+}
+.animate {
+    transition: all 300ms ease-in-out;
+}

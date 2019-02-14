@@ -7,13 +7,13 @@ import { AlertifyService } from '../_services/alertify.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private _auth: AuthService, private router: Router, private _alertify: AlertifyService) { }
+  constructor(private authService: AuthService, private router: Router, private alertifyService: AlertifyService) { }
 
   canActivate(): boolean {
-    if (this._auth.loggedIn()) {
+    if (this.authService.loggedIn()) {
       return true;
     }
-    this._alertify.error('You shall not PASS!!!!');
+    this.alertifyService.error('You shall not PASS!!!!');
     this.router.navigate(['/home']);
     return false;
   }
