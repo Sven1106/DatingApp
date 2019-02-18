@@ -1,3 +1,5 @@
+import { MemberEditResolver } from './_resolvers/member-edit.resolver';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; // @angular/http is deprecated
@@ -22,6 +24,7 @@ import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
 import { MemberListResolver } from './_resolvers/member-list.resolver';
+import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 
 
 export function tokenGetter() {
@@ -33,6 +36,7 @@ export function tokenGetter() {
       HomeComponent,
       ListsComponent,
       MemberCardComponent,
+      MemberEditComponent,
       MemberDetailComponent,
       MemberListComponent,
       MessagesComponent,
@@ -57,8 +61,10 @@ export function tokenGetter() {
    ],
    providers: [
       AuthGuard,
+      PreventUnsavedChanges,
       ErrorInterceptorProvider,
       MemberDetailResolver,
+      MemberEditResolver,
       MemberListResolver
    ],
    bootstrap: [
