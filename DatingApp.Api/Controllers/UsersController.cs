@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using DatingApp.Api.Data;
@@ -31,6 +33,19 @@ namespace DatingApp.Api.Controllers {
             var user = await _repo.GetUser(id);
             var userToReturn = _mapper.Map<UserForDetailsDTO>(user);
             return Ok(userToReturn);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser(UserForUpdateDTO userForUpdateDTO) {
+            int currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var userFromRepo = await _repo.GetUser(currentUserId);
+            _mapper.Map(userForUpdateDTO, userFromRepo);
+
+            if (!await _repo.SaveAll()) {
+                return Conflict();
+            }
+
+            return NoContent();
         }
     }
 }

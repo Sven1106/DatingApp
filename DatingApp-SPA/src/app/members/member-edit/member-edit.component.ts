@@ -1,3 +1,4 @@
+import { UserService } from './../../_services/user.service';
 import { AlertifyService } from './../../_services/alertify.service';
 import { User } from './../../_models/user';
 import { ActivatedRoute } from '@angular/router';
@@ -18,7 +19,7 @@ export class MemberEditComponent implements OnInit {
       $event.returnValue = true;
     }
   }
-  constructor(private activatedroute: ActivatedRoute, private alertifyService: AlertifyService) { }
+  constructor(private activatedroute: ActivatedRoute, private alertifyService: AlertifyService, private userService: UserService) { }
 
   ngOnInit() {
     this.activatedroute.data.subscribe(data => {
@@ -26,8 +27,14 @@ export class MemberEditComponent implements OnInit {
     });
   }
   updateUser() {
-    console.log(this.user);
-    this.alertifyService.success('Profile updated successfully');
-    this.editForm.reset(this.user);
+    this.userService.updateUser(this.user).subscribe(next => {
+      this.alertifyService.success('Profile updated successfully');
+      this.editForm.reset(this.user);
+    },
+    error => {
+      this.alertifyService.error(error);
+    }
+    );
+
   }
 }
