@@ -9,6 +9,7 @@ import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { appRoute } from './routes';
 import { NgxGalleryModule } from 'ngx-gallery';
+import { FileUploadModule } from 'ng2-file-upload';
 
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { AppComponent } from './app.component';
@@ -25,6 +26,7 @@ import { MemberCardComponent } from './members/member-card/member-card.component
 import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
 import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
+import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 
 
 export function tokenGetter() {
@@ -42,6 +44,7 @@ export function tokenGetter() {
       MessagesComponent,
       NavComponent,
       RegisterComponent,
+      PhotoEditorComponent
    ],
    imports: [
       BrowserModule,
@@ -51,6 +54,7 @@ export function tokenGetter() {
       TabsModule.forRoot(),
       RouterModule.forRoot(appRoute),
       NgxGalleryModule,
+      FileUploadModule,
       JwtModule.forRoot({
          config: {
             tokenGetter: tokenGetter,
