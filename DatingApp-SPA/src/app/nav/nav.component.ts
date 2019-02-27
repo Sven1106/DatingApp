@@ -20,7 +20,7 @@ export class NavComponent implements OnInit {
 
   login() {
     this.authService.login(this.model)
-      .subscribe( // the _auth.login returns an observable, and we always need to subscribe to them
+      .subscribe( // returns an observable, and we always need to subscribe to them
         next => {
           this.alertifyService.success('Logged in');
           this.router.navigate(['/members']);
@@ -30,13 +30,13 @@ export class NavComponent implements OnInit {
   }
 
   loggedIn() {
-    // return this._auth.loggedIn();
     const token = localStorage.getItem('token');
     return !!token;
   }
 
   logOut() {
     localStorage.removeItem('token');
+    this.authService.decodedToken = null;
     this.alertifyService.message('Logged out');
     this.router.navigate(['/home']);
   }

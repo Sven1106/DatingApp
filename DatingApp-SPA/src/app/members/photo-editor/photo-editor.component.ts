@@ -1,7 +1,9 @@
-import { Photo } from './../../_models/Photo';
-import { Component, OnInit, Input } from '@angular/core';
+import { UserService } from './../../_services/user.service';
+import { Photo } from '../../_models/photo';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { environment } from 'src/environments/environment';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 
 @Component({
   selector: 'app-photo-editor',
@@ -10,13 +12,14 @@ import { environment } from 'src/environments/environment';
 })
 export class PhotoEditorComponent implements OnInit {
   @Input() photos: Photo[];
+  @Output() getMemberPhotoChange = new EventEmitter<string>();
   baseUrl = environment.apiUrl;
   uploader: FileUploader;
   hasBaseDropZoneOver = false;
   hasAnotherDropZoneOver = false;
+  currentMainPhoto: Photo;
 
-
-  constructor() { }
+  constructor(private userService: UserService, private alertifyService: AlertifyService) { }
 
   ngOnInit() {
     this.initializeUploader();
@@ -51,5 +54,17 @@ export class PhotoEditorComponent implements OnInit {
         this.photos.push(photo);
       }
     };
+  }
+
+  setMainPhoto(photo: Photo) { // since we are parsing an object from the Photo[] to the function it can deter what object it is handling
+    return this.userService.setMainPhoto(photo.id).subscribe(next => {
+      this.currentMainPhoto = this.photos.filter(p => p.isMain === true)[0];
+      this.currentMainPhoto.isMain = false;
+      photo.isMain = true;
+      this.getMemberPhotoChange.emit(photo.url);
+    },
+      error => {
+        this.alertifyService.error(error);
+      });
   }
 }

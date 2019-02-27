@@ -10,5 +10,6 @@ namespace DatingApp.Api.Data {
         Task<IEnumerable<User>> GetUsers(); // Can it be generic?
         Task<User> GetUser(int id);
         Task<Photo> GetPhoto(int id);
+        Task<Photo> GetMainPhotoFromUser(int userId);
     }
 }

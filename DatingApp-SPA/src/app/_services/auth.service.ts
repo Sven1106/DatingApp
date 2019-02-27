@@ -1,3 +1,4 @@
+import { Photo } from '../_models/photo';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -11,7 +12,6 @@ export class AuthService {
   baseUrl = environment.apiUrl + 'auth/';
   jwtHelperService = new JwtHelperService();
   decodedToken: any;
-
   constructor(private httpClient: HttpClient) { }
 
   login(model: any) {

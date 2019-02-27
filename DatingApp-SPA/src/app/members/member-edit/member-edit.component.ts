@@ -1,6 +1,7 @@
+import { AuthService } from './../../_services/auth.service';
 import { UserService } from './../../_services/user.service';
 import { AlertifyService } from './../../_services/alertify.service';
-import { User } from './../../_models/user';
+import { User } from '../../_models/user';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -19,7 +20,10 @@ export class MemberEditComponent implements OnInit {
       $event.returnValue = true;
     }
   }
-  constructor(private activatedroute: ActivatedRoute, private alertifyService: AlertifyService, private userService: UserService) { }
+  constructor(private activatedroute: ActivatedRoute,
+    private alertifyService: AlertifyService,
+    private userService: UserService,
+    private authService: AuthService) { }
 
   ngOnInit() {
     this.activatedroute.data.subscribe(data => {
@@ -35,6 +39,9 @@ export class MemberEditComponent implements OnInit {
       this.alertifyService.error(error);
     }
     );
+  }
 
+  updateMainPhoto(photoUrl: string) {
+    this.user.photoUrl = photoUrl;
   }
 }
