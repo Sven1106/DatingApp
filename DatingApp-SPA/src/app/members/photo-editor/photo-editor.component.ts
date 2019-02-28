@@ -1,3 +1,4 @@
+import { AuthService } from './../../_services/auth.service';
 import { UserService } from './../../_services/user.service';
 import { Photo } from '../../_models/photo';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
@@ -12,14 +13,13 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 })
 export class PhotoEditorComponent implements OnInit {
   @Input() photos: Photo[];
-  @Output() getMemberPhotoChange = new EventEmitter<string>();
   baseUrl = environment.apiUrl;
   uploader: FileUploader;
   hasBaseDropZoneOver = false;
   hasAnotherDropZoneOver = false;
   currentMainPhoto: Photo;
 
-  constructor(private userService: UserService, private alertifyService: AlertifyService) { }
+  constructor(private userService: UserService, private alertifyService: AlertifyService, private authService: AuthService) { }
 
   ngOnInit() {
     this.initializeUploader();
@@ -58,13 +58,29 @@ export class PhotoEditorComponent implements OnInit {
 
   setMainPhoto(photo: Photo) { // since we are parsing an object from the Photo[] to the function it can deter what object it is handling
     return this.userService.setMainPhoto(photo.id).subscribe(next => {
+
       this.currentMainPhoto = this.photos.filter(p => p.isMain === true)[0];
       this.currentMainPhoto.isMain = false;
       photo.isMain = true;
-      this.getMemberPhotoChange.emit(photo.url);
+
+      this.authService.setMainPhoto(photo.url);
     },
       error => {
         this.alertifyService.error(error);
       });
+  }
+
+  deletePhoto(photo: Photo) {
+    this.alertifyService.confirm('Are you sure you want to delete this photo?', () => {
+      return this.userService.deletePhoto(photo.id).subscribe(next => {
+        const indexInPhotoArray = this.photos.findIndex(p => p.id === photo.id);
+        this.photos.splice(indexInPhotoArray, 1);
+        this.alertifyService.success('Photo has been deleted');
+      }, error => {
+        this.alertifyService.error('Failed to delete the photo');
+      });
+    }
+    );
+
   }
 }

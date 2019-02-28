@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router, private alertifyService: AlertifyService) { }
 
   canActivate(): boolean {
-    if (this.authService.loggedIn()) {
+    if (this.authService.isLoggedIn()) {
       return true;
     }
     this.alertifyService.error('You shall not PASS!!!!');
