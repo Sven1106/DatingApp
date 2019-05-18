@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 
 namespace DatingApp.Api.Data {
     public class Seed {
-        public DataContext _db { get; }
+        public DataContext db { get; }
         public Seed(DataContext db) {
-            _db = db;
+            this.db = db;
         }
 
         public void SeedUsers() {
@@ -19,9 +19,9 @@ namespace DatingApp.Api.Data {
                 user.PasswordSalt = passwordSalt;
                 user.Username = user.Username.ToLower();
 
-                _db.Users.Add(user);
+                db.Users.Add(user);
             }
-            _db.SaveChanges();
+            db.SaveChanges();
         }
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt) {
             using(var hmac = new System.Security.Cryptography.HMACSHA512()) {

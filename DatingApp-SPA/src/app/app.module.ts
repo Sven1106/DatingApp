@@ -1,7 +1,7 @@
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; // @angular/http is deprecated
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgModule } from '@angular/core';
@@ -49,6 +49,7 @@ export function tokenGetter() {
    imports: [
       BrowserModule,
       FormsModule,
+      ReactiveFormsModule,
       HttpClientModule,
       BsDropdownModule.forRoot(),
       TabsModule.forRoot(),

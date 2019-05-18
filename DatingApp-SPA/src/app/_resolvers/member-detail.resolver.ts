@@ -18,7 +18,6 @@ export class MemberDetailResolver implements Resolve<User> {
                 this.router.navigate(['/members']);
                 return of(null);
             })
-
         );
     }
 }

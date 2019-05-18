@@ -13,35 +13,35 @@ namespace DatingApp.Api.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase {
-        private readonly IDatingRepository _datingRepo;
-        private readonly IMapper _mapper;
+        private readonly IDatingRepository datingRepo;
+        private readonly IMapper mapper;
 
         public UsersController(IDatingRepository datingRepo, IMapper mapper) {
-            _datingRepo = datingRepo;
-            _mapper = mapper;
+            this.datingRepo = datingRepo;
+            this.mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet()]
         public async Task<IActionResult> GetUsers() {
-            var users = await _datingRepo.GetUsers();
-            var usersToReturn = _mapper.Map<IEnumerable<UserForListDTO>>(users);
+            var users = await datingRepo.GetUsers();
+            var usersToReturn = mapper.Map<IEnumerable<UserForListDTO>>(users);
             return Ok(usersToReturn);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id) {
-            var user = await _datingRepo.GetUser(id);
-            var userToReturn = _mapper.Map<UserForDetailsDTO>(user);
+            var user = await datingRepo.GetUser(id);
+            var userToReturn = mapper.Map<UserForDetailsDTO>(user);
             return Ok(userToReturn);
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateUser(UserForUpdateDTO userForUpdateDTO) {
             int currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var userFromRepo = await _datingRepo.GetUser(currentUserId);
-            _mapper.Map(userForUpdateDTO, userFromRepo);
+            var userFromRepo = await datingRepo.GetUser(currentUserId);
+            mapper.Map(userForUpdateDTO, userFromRepo);
 
-            if (!await _datingRepo.SaveAll()) {
+            if (!await datingRepo.SaveAll()) {
                 return Conflict();
             }
 
